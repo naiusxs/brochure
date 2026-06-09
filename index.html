@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GysFly — Folleto Cinematográfico</title>
+<!--
+  UI/UX Pro Max → Modern Dark Cinema + Bold Typography Mobile
+  Font:   Inter 800/900 (display) · Playfair Display italic (pull quotes) · JetBrains Mono (labels)
+  Palette: #020203 void · #050506 dark · rgba(255,255,255,0.05) surface · #00A8A2 teal · #7D4E99 purple · #F7C01F yellow
+  Effects: glassmorphism · ambient blobs · bezier(0.16,1,0.3,1) · prefers-reduced-motion
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Playfair+Display:ital@1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+/* ── DESIGN TOKENS (UI/UX Pro Max: Modern Dark Cinema) ── */
+:root{
+  --void:   #020203;
+  --dark:   #050506;
+  --dark2:  #0a0a0c;
+  --surf:   rgba(255,255,255,.05);
+  --glass:  rgba(255,255,255,.08);
+  --border: rgba(255,255,255,.08);
+  --coral:  #00A8A2;
+  --coral2: #00C4BC;
+  --cglow:  rgba(0,168,162,.28);
+  --teal:   #7D4E99;
+  --tglass: rgba(125,78,153,.3);
+  --yellow: #F7C01F;
+  --fg:     #EDEDEF;
+  --fgm:    #8A8F98;
+  /* Inter scale (5:1 H1:Body ratio per skill) */
+  --h1:     clamp(3.5rem, 8vw, 9rem);
+  --h2:     clamp(2rem, 4vw, 3.5rem);
+  --body:   .9rem;
+  /* The easing (from skill: Expo.out Bezier) */
+  --ease:   cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html,body{height:100%;overflow:hidden;font-family:'Inter',sans-serif;color:var(--fg)}
+a{color:inherit;text-decoration:none}
+
+/* ── SCROLL CONTAINER ── */
+.wrap{height:100vh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}
+.wrap::-webkit-scrollbar{display:none}
+
+/* ── PAGE ── */
+.p{height:100vh;scroll-snap-align:start;overflow:hidden;position:relative;background:var(--void)}
+
+/* ── AMBIENT BLOBS (from skill: slow animated blob circles) ── */
+.blob{
+  position:absolute;border-radius:50%;pointer-events:none;z-index:0;
+  filter:blur(80px);
+}
+@media(prefers-reduced-motion:no-preference){
+  .blob-1{animation:blobFloat1 18s ease-in-out infinite}
+  .blob-2{animation:blobFloat2 22s ease-in-out infinite}
+  .blob-3{animation:blobFloat3 16s ease-in-out infinite}
+  @keyframes blobFloat1{0%,100%{transform:translate(0,0)}33%{transform:translate(40px,-30px)}66%{transform:translate(-20px,20px)}}
+  @keyframes blobFloat2{0%,100%{transform:translate(0,0)}40%{transform:translate(-35px,25px)}70%{transform:translate(20px,-15px)}}
+  @keyframes blobFloat3{0%,100%{transform:translate(0,0)}50%{transform:translate(25px,35px)}}
+}
+
+/* ── DOT NAV (left — pill bars) ── */
+#nav{position:fixed;left:2rem;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:.75rem;align-items:flex-start}
+.bar{height:3px;border-radius:2px;background:rgba(255,255,255,.15);cursor:pointer;transition:all .4s var(--ease);width:20px}
+.bar.on{background:var(--coral);width:36px;box-shadow:0 0 10px var(--cglow)}
+.bar{position:relative}
+.blabel{position:absolute;left:3rem;top:50%;transform:translateY(-50%) translateX(-4px);white-space:nowrap;font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:var(--fgm);opacity:0;transition:all .25s;pointer-events:none}
+.bar:hover .blabel{opacity:1;transform:translateY(-50%) translateX(0)}
+
+/* ── PAGE NUMBER ── */
+.pnum{display:none}
+.pnum strong{font-size:.95rem;font-weight:500}
+.pnum-sep{width:18px;height:1px;background:currentColor;opacity:.3}
+
+/* ────────────────────────────────────────
+   PAGE 1 — HERO (VOID + PHOTO + BLOBS)
+   Inter 900, coral glow CTA
+───────────────────────────────────────── */
+#p1{}
+.p1-photo{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?w=1600&q=80') center/cover;opacity:.18;z-index:0}
+/* ambient blobs */
+#p1 .blob-1{width:500px;height:500px;top:-100px;right:-100px;background:rgba(0,168,162,.18)}
+#p1 .blob-2{width:350px;height:350px;bottom:100px;left:100px;background:var(--cglow)}
+.p1-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:.5rem 5rem 3rem}
+.p1-top{display:flex;justify-content:space-between;align-items:flex-start}
+.p1-logo{
+  opacity:0;transform:translateY(-12px);transition:opacity .6s .1s var(--ease),transform .6s .1s var(--ease);
+}
+.p1-logo img{height:clamp(120px,14vw,200px);width:auto;display:block}
+.p1-mono{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;
+  color:var(--fgm);text-align:right;
+  opacity:0;transform:translateY(-12px);transition:opacity .6s .2s var(--ease),transform .6s .2s var(--ease);
+}
+.p1-mid{flex:1;display:flex;align-items:flex-end;padding-bottom:1rem}
+.p1-h1{
+  font-size:var(--h1);font-weight:900;line-height:.88;
+  letter-spacing:-.04em;color:var(--fg);
+  opacity:0;transform:translateX(-40px);transition:opacity .9s .35s var(--ease),transform .9s .35s var(--ease);
+}
+.p1-h1 .accent{color:var(--coral);display:block;text-shadow:0 0 60px var(--cglow)}
+.p1-bottom{
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-top:1px solid var(--border);padding-top:1.5rem;
+}
+.p1-sub{
+  font-size:var(--body);font-weight:300;line-height:1.75;color:var(--fgm);max-width:380px;
+  opacity:0;transform:translateY(12px);transition:opacity .7s .8s var(--ease),transform .7s .8s var(--ease);
+}
+.p1-btns{
+  display:flex;gap:.9rem;align-items:center;
+  opacity:0;transform:translateY(12px);transition:opacity .7s .95s var(--ease),transform .7s .95s var(--ease);
+}
+.btn-glow{
+  background:var(--coral);color:#fff;
+  padding:.8rem 1.9rem;font-size:.78rem;font-weight:700;
+  border:none;cursor:pointer;border-radius:6px;font-family:'Inter',sans-serif;
+  letter-spacing:.04em;transition:all .3s var(--ease);
+  box-shadow:0 0 0 rgba(0,168,162,0);
+}
+.btn-glow:hover{background:var(--coral2);transform:translateY(-2px);box-shadow:0 8px 30px var(--cglow)}
+.btn-glass{
+  background:var(--glass);color:var(--fg);
+  padding:.8rem 1.9rem;font-size:.78rem;font-weight:600;
+  border:1px solid var(--border);cursor:pointer;border-radius:6px;
+  backdrop-filter:blur(12px);font-family:'Inter',sans-serif;
+  transition:all .3s var(--ease);
+}
+.btn-glass:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.12)}
+#p1.on .p1-logo,#p1.on .p1-mono,#p1.on .p1-h1,#p1.on .p1-sub,#p1.on .p1-btns{opacity:1;transform:none}
+
+/* ────────────────────────────────────────
+   PAGE 2 — NOSOTROS (DARK + GLASS CARD)
+───────────────────────────────────────── */
+#p2{}
+.p2-photo-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1400&q=80') center/cover;opacity:.22;z-index:0}
+#p2 .blob-1{width:400px;height:400px;top:50px;left:-100px;background:var(--cglow);opacity:.7}
+#p2 .blob-2{width:300px;height:300px;bottom:-50px;right:100px;background:rgba(0,168,162,.2)}
+.p2-content{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:1fr 1fr;gap:0}
+.p2-glass-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:6rem 4rem 6rem 5rem;
+  background:rgba(5,5,6,.6);backdrop-filter:blur(20px);
+  border-right:1px solid var(--border);
+  opacity:0;transform:translateX(-25px);transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease);
+}
+.mono-tag{
+  font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.25em;
+  text-transform:uppercase;color:var(--coral);margin-bottom:1.2rem;
+}
+.inter-h2{
+  font-size:var(--h2);font-weight:900;line-height:1;letter-spacing:-.03em;color:var(--fg);margin-bottom:1.2rem;
+}
+.inter-h2 .teal{color:#00A8A2;-webkit-text-stroke:1px rgba(0,168,162,.3);text-stroke:1px rgba(0,168,162,.3)}
+.body-inter{font-size:var(--body);font-weight:300;line-height:1.8;color:var(--fgm);max-width:380px;margin-bottom:2rem}
+.stats-cinema{display:flex;gap:2.5rem}
+.sc-item{}
+.sc-num{
+  font-size:2.5rem;font-weight:900;color:var(--coral);display:block;
+  text-shadow:0 0 30px var(--cglow);line-height:1;letter-spacing:-.04em;
+}
+.sc-lbl{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fgm);margin-top:.3rem}
+.p2-right-panel{
+  display:block;padding:0;overflow:hidden;
+  opacity:0;transform:translateX(25px);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
+}
+/* big quote — Playfair Display italic (per skill: only for pull quotes) */
+.pull-quote{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:clamp(1.5rem,2.5vw,2rem);line-height:1.4;
+  color:rgba(255,255,255,.35);text-align:center;
+  border-left:2px solid var(--coral);padding-left:1.5rem;
+}
+.pull-quote strong{color:var(--fg);font-style:italic}
+.pq-source{
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--fgm);
+  margin-top:1.5rem;
+}
+#p2.on .p2-glass-left,#p2.on .p2-right-panel{opacity:1;transform:none}
+
+/* ────────────────────────────────────────
+   PAGE 3 — MISIÓN / VISIÓN (GLASS SPLIT)
+───────────────────────────────────────── */
+#p3{display:flex}
+#p3 .blob-1{width:450px;height:450px;top:-100px;left:50%;transform:translateX(-50%);background:rgba(0,168,162,.15)}
+.mv-half{
+  flex:1;position:relative;z-index:1;
+  display:flex;flex-direction:column;justify-content:flex-start;
+  padding:3rem 3.5rem;
+  backdrop-filter:blur(8px);
+  overflow:hidden;
+}
+.mv-half:first-child{
+  background:rgba(0,168,162,.12);border-right:1px solid var(--border);
+  opacity:0;transform:translateX(-20px);transition:opacity .7s .15s var(--ease),transform .7s .15s var(--ease);
+}
+.mv-half:last-child{
+  background:rgba(5,5,6,.4);
+  opacity:0;transform:translateX(20px);transition:opacity .7s .3s var(--ease),transform .7s .3s var(--ease);
+}
+.mv-big-num{
+  font-size:8rem;font-weight:900;line-height:1;letter-spacing:-.05em;
+  color:rgba(255,255,255,.04);margin-bottom:-.5rem;
+}
+.mv-type{
+  font-size:clamp(2.5rem,5vw,4.5rem);font-weight:900;letter-spacing:-.03em;color:var(--fg);
+  margin-bottom:1.2rem;line-height:.95;
+}
+.mv-half:first-child .mv-type{color:#00A8A2}
+.mv-half:last-child .mv-type{color:#7D4E99}
+.mv-rule{width:0;height:2px;background:currentColor;margin-bottom:1.2rem;transition:width .7s .6s var(--ease)}
+.mv-half:first-child .mv-rule{background:rgba(0,168,162,.6)}
+.mv-half:last-child .mv-rule{background:#7D4E99}
+.mv-text{font-size:var(--body);font-weight:300;line-height:1.8;color:var(--fgm);max-width:360px}
+#p3.on .mv-half{opacity:1;transform:none}
+#p3.on .mv-rule{width:40px}
+
+/* ────────────────────────────────────────
+   PAGE 3 REDESIGN — full-width bg photo, dark glass info right
+───────────────────────────────────────── */
+#p3{display:grid!important;grid-template-columns:1fr 1fr;position:relative}
+.p3-bg{position:absolute;inset:0;z-index:0;overflow:hidden}
+.p3-bg img{width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.p3-left{position:relative;z-index:1}
+.p3-info{position:relative;z-index:1;display:flex;flex-direction:column;height:100%;border-left:1px solid var(--border)}
+.p3-panel{
+  flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:3rem 3.5rem;
+  background:rgba(5,5,6,.72);backdrop-filter:blur(40px);
+  opacity:0;transform:translateX(25px);transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+.p3-panel:first-child{transition-delay:.2s}
+.p3-panel:last-child{transition-delay:.38s;border-top:1px solid var(--border)}
+.p3-panel .mono-tag{color:var(--fgm);margin-bottom:.7rem}
+.p3-panel h2{font-size:clamp(1.8rem,3vw,2.6rem);font-weight:900;margin-bottom:.8rem;letter-spacing:-.03em;line-height:1}
+.p3-panel:first-child h2{color:#00A8A2}
+.p3-panel:last-child h2{color:#7D4E99}
+.p3-panel p{font-size:.85rem;font-weight:300;line-height:1.8;color:var(--fgm)}
+.p3-points{margin-top:.85rem;display:flex;flex-direction:column;gap:.4rem}
+.p3-pt{font-size:.75rem;color:var(--fgm);font-weight:300;display:flex;align-items:flex-start;gap:.55rem;line-height:1.5}
+.p3-pt-dash{width:10px;height:1px;background:var(--fgm);opacity:.4;flex-shrink:0;margin-top:.75em}
+#p3.on .p3-panel{opacity:1;transform:none}
+
+/* ────────────────────────────────────────
+   PAGE 4 — PROPUESTA DE VALOR (VOID + GLOW)
+───────────────────────────────────────── */
+#p4{}
+#p4 .blob-1{width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--cglow);opacity:.35}
+.p4-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:4.5rem 5rem}
+.p4-top{
+  display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;
+  opacity:0;transform:translateY(-12px);transition:opacity .7s .1s var(--ease),transform .7s .1s var(--ease);
+}
+.p4-display{
+  font-size:var(--h2);font-weight:900;line-height:.95;letter-spacing:-.03em;color:var(--fg);
+}
+.p4-display span{
+  color:var(--coral);text-shadow:0 0 40px var(--cglow);
+}
+.p4-note{font-size:.8rem;font-weight:300;color:var(--fgm);max-width:240px;text-align:right;line-height:1.65}
+/* formula — glassmorphism */
+.formula-glass{
+  background:var(--glass);border:1px solid var(--border);
+  backdrop-filter:blur(16px);border-radius:12px;
+  padding:1.8rem 2rem;margin-bottom:2rem;
+  display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;
+  opacity:0;transform:scale(.97);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
+}
+.fg-block{text-align:center}
+.fg-label{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fgm);margin-bottom:.3rem}
+.fg-val{font-size:clamp(1rem,2vw,1.5rem);font-weight:900;letter-spacing:-.02em;color:var(--fg)}
+.fg-op{font-size:2rem;font-weight:300;color:rgba(255,255,255,.15)}
+.fg-result{background:var(--coral);border-radius:8px;padding:.5rem 1.4rem;box-shadow:0 0 25px var(--cglow)}
+.fg-result .fg-val{color:#fff}
+.val-cinema{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;flex:1}
+.vc2{
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:12px;padding:1.8rem 1.4rem;backdrop-filter:blur(12px);
+  opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);
+  transition-delay:calc(var(--i) * .12s + .42s);
+}
+.vc2:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
+.vc2-icon{font-size:1.6rem;margin-bottom:1rem;display:block}
+.vc2 h4{font-size:.88rem;font-weight:700;color:var(--fg);margin-bottom:.5rem}
+.vc2 p{font-size:.78rem;line-height:1.7;color:var(--fgm);font-weight:300}
+#p4.on .p4-top{opacity:1;transform:none}
+#p4.on .formula-glass{opacity:1;transform:scale(1)}
+#p4.on .vc2{opacity:1;transform:translateY(0)}
+
+/* ────────────────────────────────────────
+   PAGE 5 — SERVICIOS (GLASS GRID)
+───────────────────────────────────────── */
+#p5{}
+#p5 .blob-1{width:400px;height:400px;bottom:-100px;right:-50px;background:rgba(0,168,162,.15)}
+#p5 .blob-2{width:300px;height:300px;top:100px;left:-80px;background:var(--cglow);opacity:.5}
+.p5-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:4rem 5rem}
+.p5-head{
+  display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;
+  opacity:0;transform:translateY(-12px);transition:opacity .6s .1s var(--ease),transform .6s .1s var(--ease);
+}
+.p5-title{font-size:var(--h2);font-weight:900;letter-spacing:-.03em;color:var(--fg);line-height:1}
+.p5-title span{color:var(--coral)}
+.p5-count{
+  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--fgm);text-align:right;line-height:1.6;
+}
+.srv-cinema{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;flex:1}
+.sc-card{
+  background:var(--glass);border:1px solid var(--border);
+  border-radius:12px;padding:1.5rem 1rem;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  backdrop-filter:blur(12px);
+  transition:all .4s var(--ease);cursor:default;
+  opacity:0;transform:translateY(15px);
+}
+.sc-card:hover{background:rgba(0,168,162,.15);border-color:rgba(0,168,162,.35);transform:translateY(-4px)}
+.sc-card:hover .sc-icon{background:rgba(0,168,162,.2)}
+.sc-icon{
+  width:50px;height:50px;border-radius:12px;background:rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:center;font-size:1.5rem;
+  margin-bottom:.8rem;transition:background .4s;
+}
+.sc-name{font-size:.75rem;font-weight:700;color:var(--fg)}
+#p5.on .p5-head{opacity:1;transform:none}
+#p5.on .sc-card{opacity:1;transform:translateY(0)}
+#p5.on .sc-card:nth-child(1){transition-delay:.12s}
+#p5.on .sc-card:nth-child(2){transition-delay:.17s}
+#p5.on .sc-card:nth-child(3){transition-delay:.22s}
+#p5.on .sc-card:nth-child(4){transition-delay:.27s}
+#p5.on .sc-card:nth-child(5){transition-delay:.32s}
+#p5.on .sc-card:nth-child(6){transition-delay:.37s}
+#p5.on .sc-card:nth-child(7){transition-delay:.42s}
+#p5.on .sc-card:nth-child(8){transition-delay:.47s}
+#p5.on .sc-card:nth-child(9){transition-delay:.52s}
+#p5.on .sc-card:nth-child(10){transition-delay:.57s}
+
+/* ────────────────────────────────────────
+   PAGE 6 — TECNOLOGÍA (DARK + CORAL CARD)
+───────────────────────────────────────── */
+#p6{}
+#p6 .blob-1{width:350px;height:350px;top:50px;right:-80px;background:var(--cglow);opacity:.5}
+.p6-content{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:1fr 1fr;gap:0}
+.p6-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:5.5rem 4rem 5.5rem 5rem;
+  border-right:1px solid var(--border);
+  opacity:0;transform:translateX(-20px);transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease);
+}
+.partners-cinema{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
+.pc-badge{
+  background:var(--glass);border:1px solid var(--border);
+  backdrop-filter:blur(12px);border-radius:8px;
+  padding:.6rem 1.4rem;font-size:1rem;font-weight:800;letter-spacing:.04em;
+  color:rgba(255,255,255,.6);transition:all .3s var(--ease);cursor:default;
+}
+.pc-badge:hover{background:rgba(0,168,162,.1);border-color:rgba(0,168,162,.35);color:var(--coral);box-shadow:0 0 15px var(--cglow)}
+.p6-right{
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+  padding:5.5rem 5rem 5.5rem 4rem;
+  opacity:0;transform:translateX(20px);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
+}
+.finance-cinema{
+  background:linear-gradient(135deg,var(--coral) 0%,#C04A1A 100%);
+  border-radius:16px;padding:3rem;width:100%;
+  box-shadow:0 20px 60px rgba(0,168,162,.35);
+}
+.finance-cinema h3{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:900;letter-spacing:-.02em;color:#fff;margin-bottom:1rem;line-height:1}
+/* pull quote inside finance */
+.finance-cinema .pq{
+  font-family:'Playfair Display',serif;font-style:italic;
+  font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.8);margin-bottom:1.5rem;
+}
+.ska-chip{
+  display:inline-flex;align-items:center;gap:.4rem;
+  background:rgba(0,0,0,.2);color:rgba(255,255,255,.85);
+  padding:.4rem 1rem;border-radius:50px;font-size:.7rem;font-weight:700;
+  font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
+}
+#p6.on .p6-left,#p6.on .p6-right{opacity:1;transform:none}
+
+/* ────────────────────────────────────────
+   PAGE 7 — DESTINOS (CINEMATIC TRIPTYCH)
+───────────────────────────────────────── */
+#p7{display:flex}
+.cine-panel{flex:1;position:relative;overflow:hidden;cursor:pointer}
+.cine-panel:not(:last-child){border-right:1px solid rgba(255,255,255,.05)}
+.cine-panel img{width:100%;height:100%;object-fit:cover;filter:brightness(.3);transition:filter .6s var(--ease),transform .8s var(--ease)}
+.cine-panel:hover img{filter:brightness(.5);transform:scale(1.05)}
+.cine-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(2,2,3,.98) 0%,transparent 55%)}
+.cine-info{
+  position:absolute;bottom:0;left:0;right:0;padding:2.5rem;
+  opacity:0;transform:translateY(14px);transition:opacity .7s var(--ease),transform .7s var(--ease);
+}
+.cine-panel:nth-child(1) .cine-info{transition-delay:.15s}
+.cine-panel:nth-child(2) .cine-info{transition-delay:.3s}
+.cine-panel:nth-child(3) .cine-info{transition-delay:.45s}
+.cine-num{
+  font-size:6rem;font-weight:900;line-height:1;color:rgba(255,255,255,.04);
+  margin-bottom:.3rem;letter-spacing:-.04em;
+}
+.cine-badge{
+  background:var(--coral);color:#fff;padding:.2rem .7rem;
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;font-weight:500;
+  letter-spacing:.1em;text-transform:uppercase;border-radius:4px;
+  display:inline-block;margin-bottom:.6rem;
+  box-shadow:0 0 15px var(--cglow);
+}
+.cine-name{
+  font-size:clamp(1.4rem,2.5vw,2rem);font-weight:900;letter-spacing:-.03em;
+  color:var(--fg);margin-bottom:.4rem;line-height:1;
+}
+.cine-desc{font-size:.78rem;line-height:1.6;color:var(--fgm);font-weight:300}
+.cine-soon{
+  position:absolute;top:1.5rem;right:1.5rem;
+  background:rgba(255,255,255,.05);backdrop-filter:blur(10px);
+  padding:.25rem .7rem;border-radius:20px;
+  font-family:'JetBrains Mono',monospace;font-size:.55rem;
+  color:rgba(255,255,255,.3);letter-spacing:.12em;text-transform:uppercase;
+}
+/* page title */
+.cine-pagetitle{
+  position:absolute;top:2.5rem;left:50%;transform:translateX(-50%);
+  font-family:'JetBrains Mono',monospace;font-size:.58rem;
+  letter-spacing:.3em;text-transform:uppercase;color:rgba(255,255,255,.2);
+  z-index:2;white-space:nowrap;
+  opacity:0;transition:opacity .7s .1s;
+}
+#p7.on .cine-info{opacity:1;transform:translateY(0)}
+#p7.on .cine-pagetitle{opacity:1}
+
+/* ────────────────────────────────────────
+   PAGE 8 — CONTACTO (TEAL GLASS)
+───────────────────────────────────────── */
+#p8{}
+#p8 .blob-1{width:500px;height:500px;top:-100px;right:-150px;background:rgba(0,168,162,.22)}
+#p8 .blob-2{width:400px;height:400px;bottom:-100px;left:-100px;background:var(--cglow);opacity:.25}
+.p8-content{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:1.1fr 1fr}
+.p8-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:6rem 4rem 6rem 5rem;
+  border-right:1px solid var(--border);
+  opacity:0;transform:translateX(-20px);transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease);
+}
+.p8-mono{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--coral);margin-bottom:1rem}
+.p8-h2{
+  font-size:var(--h2);font-weight:900;letter-spacing:-.03em;line-height:.95;
+  color:var(--fg);margin-bottom:2rem;
+}
+.p8-h2 span{
+  color:var(--coral);text-shadow:0 0 30px var(--cglow);
+}
+.offices-cine{display:flex;flex-direction:column;gap:.75rem;margin-bottom:2.5rem}
+.oc-item{display:flex;align-items:center;gap:.75rem;font-size:.88rem;font-weight:400;color:var(--fgm)}
+.oc-dot{width:8px;height:2px;border-radius:1px;background:var(--coral);flex-shrink:0;box-shadow:0 0 8px var(--cglow)}
+.p8-cta{
+  display:inline-flex;align-items:center;gap:.6rem;
+  background:var(--coral);color:#fff;
+  padding:.9rem 2rem;border-radius:8px;
+  font-size:.82rem;font-weight:700;font-family:'Inter',sans-serif;
+  border:none;cursor:pointer;transition:all .3s var(--ease);
+  box-shadow:0 8px 30px var(--cglow);
+}
+.p8-cta:hover{background:var(--coral2);transform:translateY(-3px);box-shadow:0 14px 40px var(--cglow)}
+.p8-right{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:6rem 5rem 6rem 4rem;
+  opacity:0;transform:translateX(20px);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
+}
+#p8.on .p8-left,#p8.on .p8-right{opacity:1;transform:none}
+.info-glass{display:flex;flex-direction:column;gap:.5rem}
+.ig-row{
+  background:var(--glass);border:1px solid var(--border);border-radius:10px;
+  backdrop-filter:blur(12px);
+  display:flex;align-items:flex-start;gap:1.2rem;padding:1.2rem;
+  transition:border-color .3s;
+}
+.ig-row:hover{border-color:rgba(0,168,162,.3)}
+.ig-icon{
+  width:36px;height:36px;border-radius:8px;background:rgba(0,168,162,.1);
+  display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0;
+}
+.ig-lbl{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);margin-bottom:.25rem}
+.ig-val{font-size:.87rem;color:var(--fg);line-height:1.5}
+.p8-socials{display:flex;gap:.6rem;margin-top:1.5rem}
+.p8-soc{
+  background:var(--glass);border:1px solid var(--border);
+  backdrop-filter:blur(8px);color:var(--fgm);
+  padding:.45rem 1rem;border-radius:6px;font-size:.7rem;font-weight:600;
+  transition:all .3s var(--ease);
+}
+.p8-soc:hover{background:rgba(0,168,162,.12);border-color:rgba(0,168,162,.35);color:var(--coral)}
+/* footer */
+.p8-foot{
+  position:absolute;bottom:0;left:0;right:0;z-index:3;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 5rem;border-top:1px solid var(--border);
+}
+.pf-logo{font-size:.9rem;font-weight:900;letter-spacing:.12em;color:rgba(255,255,255,.2)}
+.pf-logo em{color:rgba(0,168,162,.5);font-style:normal}
+.pf-copy{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.1em;color:rgba(255,255,255,.15)}
+
+/* ── LOGO PILL (white container on dark bg) ── */
+.logo-pill{
+  background:#fff;border-radius:8px;padding:5px 10px;
+  display:inline-flex;align-items:center;
+}
+.logo-pill img{height:28px;width:auto;display:block}
+.logo-pill-sm{
+  background:#fff;border-radius:5px;padding:3px 7px;
+  display:inline-flex;align-items:center;
+}
+.logo-pill-sm img{height:18px;width:auto;display:block}
+
+/* ── IMAGEN-RICH ADDITIONS ── */
+
+/* P2 right panel — photo frame */
+.p2-photo-frame{width:100%;height:100%;position:relative;overflow:hidden}
+.p2-photo-frame img{width:100%;height:100%;object-fit:cover;filter:brightness(.38);transition:filter .6s var(--ease)}
+.p2-photo-frame:hover img{filter:brightness(.5)}
+.p2-caption{position:absolute;bottom:0;left:0;right:0;padding:2.5rem 3rem 3.5rem;background:linear-gradient(to top,rgba(2,2,3,.97) 30%,transparent 100%)}
+.p2-caption .pull-quote{border-left-color:var(--coral);font-size:clamp(1.2rem,2vw,1.6rem)}
+
+/* P3 photo insets + bullet points */
+.mv-photo{width:100%;height:130px;border-radius:8px;overflow:hidden;margin-bottom:1rem;flex-shrink:0;border:1px solid rgba(255,255,255,.07)}
+.mv-photo img{width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.mv-big-num{font-size:5rem;font-weight:900;line-height:1;letter-spacing:-.05em;color:rgba(255,255,255,.04);margin-bottom:-.3rem}
+.mv-points{margin-top:.8rem;display:flex;flex-direction:column;gap:.4rem}
+.mv-pt{display:flex;align-items:flex-start;gap:.6rem;font-size:.75rem;font-weight:300;color:var(--fgm);line-height:1.5}
+.mv-pt-dash{width:10px;height:1px;background:currentColor;flex-shrink:0;margin-top:.75em;opacity:.5}
+
+/* P5 cards — left-align + description */
+.sc-card{align-items:flex-start!important;text-align:left!important;padding:1.1rem .9rem!important}
+.sc-name{font-size:.72rem;font-weight:700;color:var(--fg);margin-bottom:.3rem}
+.sc-desc{font-size:.64rem;color:var(--fgm);line-height:1.5;font-weight:300;display:block}
+
+/* P6 — partner grid cards */
+.partners-cinema{display:grid;grid-template-columns:1fr 1fr;gap:.55rem;margin-top:1.2rem!important}
+.pc-partner{display:flex;flex-direction:column;gap:.2rem;padding:.65rem .9rem;background:var(--glass);border:1px solid var(--border);border-radius:8px;backdrop-filter:blur(12px);transition:all .3s var(--ease);cursor:default}
+.pc-partner:hover{border-color:rgba(0,168,162,.35);background:rgba(0,168,162,.08)}
+.pc-pname{font-size:.82rem;font-weight:800;color:var(--fg);letter-spacing:.04em}
+.pc-pdesc{font-size:.62rem;color:var(--fgm);font-weight:300;line-height:1.4}
+/* P6 finance perks */
+.finance-perks{display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.2rem}
+.fp-item{display:flex;align-items:center;gap:.5rem;font-size:.74rem;color:rgba(255,255,255,.78);font-weight:400}
+.fp-check{font-size:.65rem;opacity:.9}
+
+/* P7 — highlight tags */
+.cine-highlights{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.65rem}
+.cine-tag{font-family:'JetBrains Mono',monospace;font-size:.53rem;letter-spacing:.08em;padding:.18rem .55rem;border:1px solid rgba(255,255,255,.12);border-radius:20px;color:rgba(255,255,255,.38)}
+
+/* ── prefers-reduced-motion (UX Pro Max guideline) ── */
+@media(prefers-reduced-motion:reduce){
+  *{transition-duration:.01ms!important;animation-duration:.01ms!important}
+  .blob{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- BAR NAV -->
+<nav id="nav">
+  <div class="bar on"><span class="blabel">01 Inicio</span></div>
+  <div class="bar"><span class="blabel">02 Nosotros</span></div>
+  <div class="bar"><span class="blabel">03 Misión</span></div>
+  <div class="bar"><span class="blabel">04 Valor</span></div>
+  <div class="bar"><span class="blabel">05 Servicios</span></div>
+  <div class="bar"><span class="blabel">06 Tecnología</span></div>
+  <div class="bar"><span class="blabel">07 Destinos</span></div>
+  <div class="bar"><span class="blabel">08 Contacto</span></div>
+</nav>
+
+<div class="wrap" id="wrap">
+
+  <!-- PAGE 1 — HERO -->
+  <div class="p" id="p1">
+    <div class="p1-photo"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="p1-content">
+      <div class="p1-top">
+        <div class="p1-logo">
+          <img src="logos/LOGO_145aa.png" alt="GysFly">
+        </div>
+        <div class="p1-mono">Agencia de Viajes · Venezuela · 2025</div>
+      </div>
+      <div class="p1-mid">
+        <h1 class="p1-h1">VIAJA<br><span class="accent">SEGURO</span><br>CON<br>NOSOTROS</h1>
+      </div>
+      <div class="p1-bottom">
+        <p class="p1-sub">Conectamos personas con el mundo. Gestión integral de viajes para todo tipo de clientes.</p>
+        <div class="p1-btns">
+          <button class="btn-glow" onclick="go(4)">VER SERVICIOS</button>
+          <button class="btn-glass" onclick="go(7)">CONTACTO</button>
+        </div>
+      </div>
+    </div>
+    <div class="pnum"><strong>01</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+  <!-- PAGE 2 — NOSOTROS -->
+  <div class="p" id="p2">
+    <div class="p2-photo-bg"></div>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="p2-content">
+      <div class="p2-glass-left">
+        <span class="mono-tag">// 02 · ¿Quiénes somos?</span>
+        <h2 class="inter-h2">DESCUBRE<br>EL MUNDO<br><span class="teal">SIN LÍMITES</span></h2>
+        <p class="body-inter">En GysFly somos una agencia enfocada en brindar experiencias completas, seguras y accesibles. Nuestro propósito es inspirar a viajar más, mejor y sin límites.</p>
+        <div class="stats-cinema">
+          <div class="sc-item"><span class="sc-num">5+</span><span class="sc-lbl">Años</span></div>
+          <div class="sc-item"><span class="sc-num">3</span><span class="sc-lbl">Oficinas</span></div>
+          <div class="sc-item"><span class="sc-num">500+</span><span class="sc-lbl">Clientes</span></div>
+        </div>
+      </div>
+      <div class="p2-right-panel">
+        <div class="p2-photo-frame">
+          <img src="https://images.unsplash.com/photo-1488085061387-422e29b40080?w=900&q=90" alt="Viajeros">
+          <div class="p2-caption">
+            <blockquote class="pull-quote">
+              "Nuestro propósito es <strong>inspirar a las personas a viajar más, mejor y sin límites</strong>."
+            </blockquote>
+            <p class="pq-source" style="margin-top:.9rem">— GysFly · Filosofía de marca</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="pnum"><strong>02</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+  <!-- PAGE 3 — MISIÓN / VISIÓN -->
+  <div class="p" id="p3">
+    <div class="p3-bg">
+      <img src="https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1600&q=90" alt="">
+    </div>
+    <div class="p3-left"></div>
+    <div class="p3-info">
+      <div class="p3-panel">
+        <span class="mono-tag">// 03 · Misión</span>
+        <h2>MISIÓN</h2>
+        <p>Facilitar la planificación de viajes a través de soluciones integrales, confiables y personalizadas que transformen cada aventura en una experiencia sin preocupaciones.</p>
+        <div class="p3-points">
+          <span class="p3-pt"><span class="p3-pt-dash"></span>Asesoría personalizada desde el primer contacto</span>
+          <span class="p3-pt"><span class="p3-pt-dash"></span>Proceso 100% digital y sin complicaciones</span>
+          <span class="p3-pt"><span class="p3-pt-dash"></span>Cobertura nacional e internacional completa</span>
+        </div>
+      </div>
+      <div class="p3-panel">
+        <span class="mono-tag">// 03 · Visión</span>
+        <h2>VISIÓN</h2>
+        <p>Convertirnos en una agencia referente a nivel internacional en experiencias de viaje modernas y conectadas con el viajero digital del siglo XXI.</p>
+        <div class="p3-points">
+          <span class="p3-pt"><span class="p3-pt-dash"></span>Referentes en viajes digitales en Venezuela</span>
+          <span class="p3-pt"><span class="p3-pt-dash"></span>Expansión a 5 países de Latinoamérica</span>
+          <span class="p3-pt"><span class="p3-pt-dash"></span>Plataforma tecnológica propia para 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE 4 — PROPUESTA DE VALOR -->
+  <div class="p" id="p4">
+    <div class="blob blob-1"></div>
+    <div class="p4-content">
+      <div class="p4-top">
+        <h2 class="p4-display">LA FÓRMULA<br><span>GYS</span></h2>
+        <p class="p4-note">Nosotros ponemos la logística para que tú solo disfrutes cada viaje.</p>
+      </div>
+      <div class="formula-glass">
+        <div class="fg-block"><div class="fg-label">Nosotros</div><div class="fg-val">LOGÍSTICA</div></div>
+        <div class="fg-op">+</div>
+        <div class="fg-block"><div class="fg-label">Tú</div><div class="fg-val">DISFRUTAR</div></div>
+        <div class="fg-op">=</div>
+        <div class="fg-result fg-block"><div class="fg-label" style="color:rgba(255,255,255,.6)">Resultado</div><div class="fg-val">✈ EXPERIENCIA PERFECTA</div></div>
+      </div>
+      <div class="val-cinema">
+        <div class="vc2" style="--i:0"><span class="vc2-icon">🌍</span><h4>Cobertura total</h4><p>Vuelos nacionales e internacionales con las mejores tarifas. Acceso a más de 500 aerolíneas y 1M+ propiedades globales.</p></div>
+        <div class="vc2" style="--i:1"><span class="vc2-icon">🛡️</span><h4>Sin preocupaciones</h4><p>Gestionamos cada detalle del itinerario: seguros, visas, traslados y hospedaje coordinados desde un solo punto.</p></div>
+        <div class="vc2" style="--i:2"><span class="vc2-icon">📋</span><h4>Gestión express</h4><p>Confirmaciones en tiempo real con prioridad. Procesos ágiles para clientes corporativos y grupos de viaje.</p></div>
+        <div class="vc2" style="--i:3"><span class="vc2-icon">🕐</span><h4>Soporte 24/7</h4><p>Atención personalizada antes, durante y después del viaje. Asistencia de emergencia en cualquier destino.</p></div>
+      </div>
+    </div>
+    <div class="pnum"><strong>04</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+  <!-- PAGE 5 — SERVICIOS -->
+  <div class="p" id="p5">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="p5-content">
+      <div class="p5-head">
+        <h2 class="p5-title">SOLUCIONES<br><span>INTEGRALES</span></h2>
+        <p class="p5-count">10 servicios disponibles<br>Clase mundial · Todo incluido</p>
+      </div>
+      <div class="srv-cinema">
+        <div class="sc-card"><div class="sc-icon">✈️</div><p class="sc-name">Boletería Aérea</p><span class="sc-desc">Nacionales e internacionales a las mejores tarifas disponibles</span></div>
+        <div class="sc-card"><div class="sc-icon">🏨</div><p class="sc-name">Hospedaje</p><span class="sc-desc">Hoteles y apartamentos desde económico hasta lujo 5★</span></div>
+        <div class="sc-card"><div class="sc-icon">🚘</div><p class="sc-name">Traslados</p><span class="sc-desc">Transfer privado aeropuerto-hotel en cualquier destino</span></div>
+        <div class="sc-card"><div class="sc-icon">🛡️</div><p class="sc-name">Seguros</p><span class="sc-desc">Cobertura médica y de viaje para tu tranquilidad total</span></div>
+        <div class="sc-card"><div class="sc-icon">📄</div><p class="sc-name">Visados</p><span class="sc-desc">Asesoría y gestión completa de trámites consulares</span></div>
+        <div class="sc-card"><div class="sc-icon">🎵</div><p class="sc-name">Eventos</p><span class="sc-desc">Conciertos, festivales y experiencias exclusivas globales</span></div>
+        <div class="sc-card"><div class="sc-icon">🗺️</div><p class="sc-name">Tours Europa</p><span class="sc-desc">Circuitos premium por las principales capitales europeas</span></div>
+        <div class="sc-card"><div class="sc-icon">🚢</div><p class="sc-name">Cruceros</p><span class="sc-desc">MSC, Royal Caribbean y las mejores líneas del mercado</span></div>
+        <div class="sc-card"><div class="sc-icon">📖</div><p class="sc-name">Guías</p><span class="sc-desc">Guías certificados en destinos turísticos seleccionados</span></div>
+        <div class="sc-card"><div class="sc-icon">📶</div><p class="sc-name">eSIMs</p><span class="sc-desc">Conectividad internacional directa desde tu smartphone</span></div>
+      </div>
+    </div>
+    <div class="pnum"><strong>05</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+  <!-- PAGE 6 — TECNOLOGÍA -->
+  <div class="p" id="p6">
+    <div class="blob blob-1"></div>
+    <div class="p6-content">
+      <div class="p6-left">
+        <span class="mono-tag">// 06 · Infraestructura</span>
+        <h2 class="inter-h2" style="font-size:clamp(1.8rem,3.5vw,3rem)">TECNOLOGÍA<br>A TU ALCANCE</h2>
+        <p class="body-inter" style="margin-top:.8rem">Operamos con plataformas de clase mundial que garantizan disponibilidad, precisión y tarifas competitivas en tiempo real.</p>
+        <div class="partners-cinema">
+          <div class="pc-partner"><span class="pc-pname">KIU</span><span class="pc-pdesc">Sistema de reservas para aerolíneas regionales</span></div>
+          <div class="pc-partner"><span class="pc-pname">SABRE</span><span class="pc-pdesc">GDS líder mundial en distribución de viajes</span></div>
+          <div class="pc-partner"><span class="pc-pname">AMADEUS</span><span class="pc-pdesc">Plataforma global · +500 aerolíneas conectadas</span></div>
+          <div class="pc-partner"><span class="pc-pname">B2B</span><span class="pc-pdesc">Portal mayorista para agentes certificados</span></div>
+          <div class="pc-partner"><span class="pc-pname">TKCONNECT</span><span class="pc-pdesc">Ticketing integrado y gestión de grupos</span></div>
+        </div>
+      </div>
+      <div class="p6-right">
+        <div class="finance-cinema">
+          <h3>FINANCIA<br>TU VIAJE</h3>
+          <p class="pq">«Opciones de pago flexibles que te permiten planificar estratégicamente y viajar según tus posibilidades.»</p>
+          <div class="finance-perks">
+            <div class="fp-item"><span class="fp-check">✓</span> Hasta 12 cuotas sin interés</div>
+            <div class="fp-item"><span class="fp-check">✓</span> Reserva con depósito mínimo inicial</div>
+            <div class="fp-item"><span class="fp-check">✓</span> Múltiples divisas aceptadas</div>
+          </div>
+          <span class="ska-chip">✓ SKALAPAY</span>
+        </div>
+      </div>
+    </div>
+    <div class="pnum"><strong>06</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+  <!-- PAGE 7 — DESTINOS -->
+  <div class="p" id="p7">
+    <span class="cine-pagetitle">// 07 · Destinos destacados · Próximamente</span>
+    <div class="cine-panel">
+      <img src="https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=1400&q=90" alt="Europa">
+      <div class="cine-overlay"></div>
+      <div class="cine-info">
+        <div class="cine-num">01</div>
+        <span class="cine-badge">Tour · 12 días</span>
+        <h3 class="cine-name">EUROPA CLÁSICA</h3>
+        <p class="cine-desc">París, Roma, Barcelona y Amsterdam. Hoteles 4★ incluidos con guía local certificado en cada ciudad.</p>
+        <div class="cine-highlights">
+          <span class="cine-tag">París</span>
+          <span class="cine-tag">Roma</span>
+          <span class="cine-tag">Barcelona</span>
+          <span class="cine-tag">Amsterdam</span>
+        </div>
+      </div>
+      <span class="cine-soon">Próximamente</span>
+    </div>
+    <div class="cine-panel">
+      <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=1400&q=90" alt="Caribe">
+      <div class="cine-overlay"></div>
+      <div class="cine-info">
+        <div class="cine-num">02</div>
+        <span class="cine-badge">All Inclusive · 7 días</span>
+        <h3 class="cine-name">CARIBE PARAÍSO</h3>
+        <p class="cine-desc">Punta Cana, Cancún y Aruba. Resorts 5★ todo incluido con salida directa desde Venezuela.</p>
+        <div class="cine-highlights">
+          <span class="cine-tag">Punta Cana</span>
+          <span class="cine-tag">Cancún</span>
+          <span class="cine-tag">Aruba</span>
+        </div>
+      </div>
+      <span class="cine-soon">Próximamente</span>
+    </div>
+    <div class="cine-panel">
+      <img src="https://images.unsplash.com/photo-1526392060635-9d6019884377?w=1400&q=90" alt="Sudamérica">
+      <div class="cine-overlay"></div>
+      <div class="cine-info">
+        <div class="cine-num">03</div>
+        <span class="cine-badge">Excursión · 10 días</span>
+        <h3 class="cine-name">SUDAMÉRICA VIVA</h3>
+        <p class="cine-desc">Buenos Aires, Lima y Cartagena. Cultura, gastronomía y aventura en un solo circuito latinoamericano.</p>
+        <div class="cine-highlights">
+          <span class="cine-tag">Buenos Aires</span>
+          <span class="cine-tag">Lima</span>
+          <span class="cine-tag">Cartagena</span>
+        </div>
+      </div>
+      <span class="cine-soon">Próximamente</span>
+    </div>
+    <div class="pnum"><strong>07</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+  <!-- PAGE 8 — CONTACTO -->
+  <div class="p" id="p8">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="p8-content">
+      <div class="p8-left">
+        <p class="p8-mono">// 08 · Contacto</p>
+        <h2 class="p8-h2">COMIENZA<br>A PLANIFICAR<br>TU <span>DESTINO</span></h2>
+        <div class="offices-cine">
+          <div class="oc-item"><span class="oc-dot"></span>Valencia, Carabobo</div>
+          <div class="oc-item"><span class="oc-dot"></span>Caracas, Distrito Capital</div>
+          <div class="oc-item"><span class="oc-dot"></span>Medellín, Colombia</div>
+        </div>
+        <a href="https://wa.me/584144234917">
+          <button class="p8-cta">💬 WHATSAPP</button>
+        </a>
+      </div>
+      <div class="p8-right">
+        <div class="info-glass">
+          <div class="ig-row"><div class="ig-icon">📍</div><div><p class="ig-lbl">Dirección</p><p class="ig-val">C.C Reda Building, Calle 4 Avenidas<br>Valencia 2001, Carabobo</p></div></div>
+          <div class="ig-row"><div class="ig-icon">📱</div><div><p class="ig-lbl">Teléfono / WhatsApp</p><p class="ig-val">+58 414 423 4917</p></div></div>
+          <div class="ig-row"><div class="ig-icon">✉️</div><div><p class="ig-lbl">Correo</p><p class="ig-val">gysflyventas@gmail.com</p></div></div>
+        </div>
+        <div class="p8-socials">
+          <a href="#" class="p8-soc">📸 @gysfly.ve</a>
+          <a href="#" class="p8-soc">🎵 TikTok</a>
+        </div>
+      </div>
+    </div>
+    <div class="p8-foot">
+      <div class="pf-logo"><div class="logo-pill-sm"><img src="logos/LOGO_145aa.png" alt="GysFly"></div></div>
+      <span class="pf-copy">© 2025 · Todos los derechos reservados</span>
+      <span class="pf-copy">08 / 08</span>
+    </div>
+    <div class="pnum"><strong>08</strong><span class="pnum-sep"></span><span>08</span></div>
+  </div>
+
+</div><!-- /wrap -->
+
+<script>
+const wrap  = document.getElementById('wrap');
+const pages = document.querySelectorAll('.p');
+const bars  = document.querySelectorAll('.bar');
+
+function go(i){ pages[i].scrollIntoView({behavior:'smooth'}); }
+window.go = go;
+
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on');
+      const idx = Array.from(pages).indexOf(e.target);
+      bars.forEach((b,i) => b.classList.toggle('on', i===idx));
+    }
+  });
+}, { root: wrap, threshold: 0.55 });
+
+pages.forEach(p => io.observe(p));
+bars.forEach((b,i) => b.addEventListener('click', () => go(i)));
+
+document.addEventListener('keydown', e => {
+  const cur = Array.from(pages).findIndex(p => p.classList.contains('on'));
+  if (e.key==='ArrowDown' && cur < pages.length-1) go(cur+1);
+  if (e.key==='ArrowUp'   && cur > 0)              go(cur-1);
+});
+
+pages[0].classList.add('on');
+</script>
+</body>
+</html>
