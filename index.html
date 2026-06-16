@@ -506,6 +506,102 @@ a{color:inherit;text-decoration:none}
   *{transition-duration:.01ms!important;animation-duration:.01ms!important}
   .blob{display:none}
 }
+
+/* ══════════════════════════════════════════════════
+   VERSIÓN MÓVIL  ·  solo ≤768px  ·  no altera el escritorio
+   Scroll natural · columnas apiladas · rejillas simplificadas
+══════════════════════════════════════════════════ */
+@media(max-width:768px){
+  /* — base: scroll natural en vez de snap, páginas que crecen — */
+  html,body{overflow:visible;height:auto}
+  .wrap{height:auto;overflow-y:visible;scroll-snap-type:none}
+  .p{height:auto;min-height:100vh;scroll-snap-align:none}
+  #nav{display:none}
+  .blob{filter:blur(60px);opacity:.5}
+
+  /* — entrada visible sin depender del observador de scroll — */
+  .p1-logo,.p1-mono,.p1-h1,.p1-sub,.p1-btns,
+  .p2-glass-left,.p2-right-panel,
+  .p3-panel,
+  .p4-left,.p4-right,
+  .p5-head,.p5-band,
+  .p6-left,.p6-right,
+  .cine-info,.cine-pagetitle,
+  .p8-left,.p8-right{opacity:1!important;transform:none!important;transition:none!important}
+
+  /* ── PAGE 1 · HERO ── */
+  .p1-content{height:auto;min-height:100vh;padding:1.6rem 1.4rem 2.2rem}
+  .p1-logo img{height:78px}
+  .p1-mono{font-size:.52rem;max-width:120px}
+  .p1-h1{font-size:clamp(3.2rem,16vw,5rem)}
+  .p1-mid{padding-bottom:1.5rem}
+  .p1-bottom{flex-direction:column;align-items:flex-start;gap:1.4rem}
+  .p1-sub{max-width:none}
+  .p1-btns{width:100%}
+  .p1-btns .btn-glow,.p1-btns .btn-glass{flex:1;text-align:center}
+
+  /* ── PAGE 2 · NOSOTROS ── */
+  .p2-content{grid-template-columns:1fr}
+  .p2-glass-left{padding:5rem 1.4rem 2rem;border-right:none}
+  .body-inter{max-width:none}
+  .stats-cinema{gap:1.6rem}
+  .sc-num{font-size:2rem}
+  .p2-right-panel{height:240px}
+  .p2-photo-frame{height:240px}
+  .p2-caption{padding:1.5rem 1.4rem 1.8rem}
+
+  /* ── PAGE 3 · MISIÓN / VISIÓN ── */
+  #p3{display:block!important}
+  .p3-bg img{filter:brightness(.4)}
+  .p3-left{display:none}
+  .p3-info{height:auto;border-left:none}
+  .p3-panel{padding:2rem 1.4rem!important}
+  .p3-panel:first-child{padding-top:5rem!important}
+  .p3-panel:last-child{border-top:1px solid var(--border)}
+
+  /* ── PAGE 4 · PROPUESTA DE VALOR ── */
+  .p4-content{grid-template-columns:1fr;height:auto;min-height:100vh;gap:2rem;padding:5rem 1.4rem 2.4rem}
+  .p4-left,.p4-right{height:auto}
+  .p4-h2{font-size:clamp(2.6rem,13vw,3.6rem)}
+  .p4-note{max-width:none}
+  .p4-formula{margin-top:1.6rem}
+  .p4-row{padding:1rem 0}
+  .p4-rdesc{max-width:none}
+
+  /* ── PAGE 5 · SOLUCIONES (bandas → tarjetas apiladas) ── */
+  .p5-content{height:auto;min-height:100vh;padding:5rem 1.4rem 2.4rem}
+  .p5-head{flex-direction:column;align-items:flex-start;gap:.6rem;margin-bottom:1.6rem}
+  .p5-title{font-size:clamp(1.9rem,8.5vw,2.6rem)}
+  .p5-count{text-align:left}
+  .p5-bands{gap:1.1rem}
+  .p5-band{flex-direction:column;gap:1rem;padding:1.2rem 1.3rem}
+  .p5-bcat{width:auto;flex-direction:row;align-items:baseline;justify-content:space-between;gap:.6rem;border-right:none;border-bottom:1px solid var(--border);padding:0 0 .8rem}
+  .p5-bcat .cat br{display:none}
+  .p5-cells{grid-template-columns:repeat(2,1fr);gap:1.1rem .9rem}
+
+  /* ── PAGE 6 · TECNOLOGÍA + FINANCIA ── */
+  .p6-content{grid-template-columns:1fr;height:auto;min-height:100vh;gap:1.6rem;padding:5rem 1.4rem 2.4rem}
+  .p6-left,.p6-right{height:auto}
+  .p6-left h2{font-size:clamp(2rem,9vw,2.6rem)}
+  .p6-partners{grid-template-columns:1fr;grid-auto-rows:auto;gap:.6rem}
+  .p6-pcard{padding:.9rem 1rem}
+  .p6-pcard.span2{grid-column:auto}
+  .p6-finance{padding:2.2rem 1.5rem}
+
+  /* ── PAGE 7 · DESTINOS (tríptico → apilado) ── */
+  #p7{flex-direction:column;height:auto;min-height:100vh}
+  .cine-panel{flex:none;min-height:64vh}
+  .cine-panel:not(:last-child){border-right:none;border-bottom:1px solid rgba(255,255,255,.06)}
+  .cine-pagetitle{top:1.4rem;font-size:.5rem}
+  .cine-info{padding:2rem 1.5rem}
+
+  /* ── PAGE 8 · CONTACTO ── */
+  .p8-content{grid-template-columns:1fr}
+  .p8-left{padding:5rem 1.4rem 1.5rem;border-right:none}
+  .p8-h2{font-size:clamp(2.2rem,11vw,3rem)}
+  .p8-right{padding:0 1.4rem 5.5rem}
+  .p8-foot{position:relative;flex-wrap:wrap;gap:.5rem;padding:1rem 1.4rem;justify-content:center}
+}
 </style>
 </head>
 <body>
