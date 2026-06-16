@@ -245,147 +245,92 @@ a{color:inherit;text-decoration:none}
 .p3-pt-dash{width:10px;height:1px;background:var(--fgm);opacity:.4;flex-shrink:0;margin-top:.75em}
 #p3.on .p3-panel{opacity:1;transform:none}
 
-/* ────────────────────────────────────────
-   PAGE 4 — PROPUESTA DE VALOR (VOID + GLOW)
-───────────────────────────────────────── */
-#p4{}
-#p4 .blob-1{width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--cglow);opacity:.35}
-.p4-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:4.5rem 5rem}
-.p4-top{
-  display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2rem;
-  opacity:0;transform:translateY(-12px);transition:opacity .7s .1s var(--ease),transform .7s .1s var(--ease);
-}
-.p4-display{
-  font-size:var(--h2);font-weight:900;line-height:.95;letter-spacing:-.03em;color:var(--fg);
-}
-.p4-display span{
-  color:var(--coral);text-shadow:0 0 40px var(--cglow);
-}
-.p4-note{font-size:.8rem;font-weight:300;color:var(--fgm);max-width:240px;text-align:right;line-height:1.65}
-/* formula — glassmorphism */
-.formula-glass{
-  background:var(--glass);border:1px solid var(--border);
-  backdrop-filter:blur(16px);border-radius:12px;
-  padding:1.8rem 2rem;margin-bottom:2rem;
-  display:flex;align-items:center;justify-content:center;gap:1.5rem;flex-wrap:wrap;
-  opacity:0;transform:scale(.97);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
-}
-.fg-block{text-align:center}
-.fg-label{font-family:'JetBrains Mono',monospace;font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fgm);margin-bottom:.3rem}
-.fg-val{font-size:clamp(1rem,2vw,1.5rem);font-weight:900;letter-spacing:-.02em;color:var(--fg)}
-.fg-op{font-size:2rem;font-weight:300;color:rgba(255,255,255,.15)}
-.fg-result{background:var(--coral);border-radius:8px;padding:.5rem 1.4rem;box-shadow:0 0 25px var(--cglow)}
-.fg-result .fg-val{color:#fff}
-.val-cinema{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;flex:1}
-.vc2{
-  background:var(--glass);border:1px solid var(--border);
-  border-radius:12px;padding:1.8rem 1.4rem;backdrop-filter:blur(12px);
-  opacity:0;transform:translateY(16px);transition:opacity .6s var(--ease),transform .6s var(--ease);
-  transition-delay:calc(var(--i) * .12s + .42s);
-}
-.vc2:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
-.vc2-icon{font-size:1.6rem;margin-bottom:1rem;display:block}
-.vc2 h4{font-size:.88rem;font-weight:700;color:var(--fg);margin-bottom:.5rem}
-.vc2 p{font-size:.78rem;line-height:1.7;color:var(--fgm);font-weight:300}
-#p4.on .p4-top{opacity:1;transform:none}
-#p4.on .formula-glass{opacity:1;transform:scale(1)}
-#p4.on .vc2{opacity:1;transform:translateY(0)}
+/* ════════ ICONOS (Lucide line icons) ════════ */
+.ico{display:inline-flex;flex-shrink:0;line-height:0}
+.ico svg,.lucide{width:100%;height:100%;display:block;stroke-width:1.6}
 
 /* ────────────────────────────────────────
-   PAGE 5 — SERVICIOS (GLASS GRID)
+   PAGE 4 — PROPUESTA DE VALOR (Editorial 2 columnas)
 ───────────────────────────────────────── */
-#p5{}
+#p4 .blob-1{width:600px;height:600px;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--cglow);opacity:.30}
+.p4-content{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(2rem,4vw,3.4rem);padding:clamp(2.4rem,5vh,3.4rem) clamp(2.5rem,5vw,3.75rem)}
+.p4-left{display:flex;flex-direction:column;height:100%;opacity:0;transform:translateX(-25px);transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease)}
+.p4-h2{font-size:clamp(2.4rem,5vw,3.5rem);font-weight:900;line-height:.9;letter-spacing:-.04em;margin:.2rem 0 0}
+.p4-h2 span{display:block;color:var(--coral);text-shadow:0 0 50px var(--cglow)}
+.p4-note{font-size:.9rem;font-weight:300;line-height:1.7;color:var(--fgm);max-width:330px;margin:1.1rem 0 0}
+.p4-formula{margin-top:auto;background:var(--glass);border:1px solid var(--border);border-radius:16px;padding:1.4rem 1.5rem;backdrop-filter:blur(12px)}
+.fl-lbl{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--fgm);margin-bottom:.15rem}
+.fl-val{font-size:clamp(1.1rem,1.6vw,1.4rem);font-weight:800;letter-spacing:-.01em}
+.fl-op{font-size:1.15rem;font-weight:300;color:rgba(255,255,255,.22);line-height:1;margin:.5rem 0}
+.fl-result{display:flex;align-items:center;gap:.6rem;background:var(--coral);border-radius:10px;padding:.75rem 1rem;margin-top:.1rem;box-shadow:0 0 28px var(--cglow)}
+.fl-result .fl-val{color:#fff}
+.fl-result .ico{width:20px;height:20px;color:#fff}
+.p4-right{display:flex;flex-direction:column;justify-content:space-between;height:100%;opacity:0;transform:translateX(25px);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease)}
+.p4-row{display:flex;gap:1.1rem;align-items:flex-start;padding:1.1rem 0;border-top:1px solid var(--border)}
+.p4-row:first-child{border-top:none;padding-top:0}
+.p4-row:last-child{padding-bottom:0}
+.p4-ricon{flex-shrink:0;width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center}
+.p4-ricon .ico{width:22px;height:22px}
+.p4-rtitle{font-size:1.05rem;font-weight:700;letter-spacing:-.01em;margin-bottom:.3rem}
+.p4-rdesc{font-size:.85rem;font-weight:300;line-height:1.6;color:var(--fgm);max-width:430px}
+.p4-row.t-teal .p4-ricon{background:rgba(0,168,162,.12)}.p4-row.t-teal .ico{color:var(--coral)}
+.p4-row.t-purple .p4-ricon{background:rgba(125,78,153,.14)}.p4-row.t-purple .ico{color:#A36BC4}
+.p4-row.t-yellow .p4-ricon{background:rgba(247,192,31,.14)}.p4-row.t-yellow .ico{color:var(--yellow)}
+#p4.on .p4-left,#p4.on .p4-right{opacity:1;transform:none}
+
+/* ────────────────────────────────────────
+   PAGE 5 — SOLUCIONES (3 bandas por categoría)
+───────────────────────────────────────── */
 #p5 .blob-1{width:400px;height:400px;bottom:-100px;right:-50px;background:rgba(0,168,162,.15)}
 #p5 .blob-2{width:300px;height:300px;top:100px;left:-80px;background:var(--cglow);opacity:.5}
-.p5-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:2.8rem 5rem}
-.p5-head{
-  display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.4rem;
-  opacity:0;transform:translateY(-12px);transition:opacity .6s .1s var(--ease),transform .6s .1s var(--ease);
-}
-.p5-title{font-size:var(--h2);font-weight:900;letter-spacing:-.03em;color:var(--fg);line-height:1}
-.p5-title span{color:var(--coral)}
-.p5-count{
-  font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--fgm);text-align:right;line-height:1.6;
-}
-.srv-cinema{display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;flex:1}
-.sc-card{
-  background:var(--glass);border:1px solid var(--border);
-  border-left:2px solid var(--coral);
-  border-radius:10px;padding:1rem .9rem;
-  display:flex;flex-direction:column;align-items:flex-start;text-align:left;
-  backdrop-filter:blur(12px);
-  transition:all .4s var(--ease);cursor:default;
-  opacity:0;transform:translateY(15px);
-}
-.sc-card:hover{background:rgba(0,168,162,.12);border-color:rgba(0,168,162,.4);border-left-color:var(--coral2);transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.3)}
-.sc-card:hover .sc-icon{background:rgba(0,168,162,.22)}
-.sc-icon{
-  width:34px;height:34px;border-radius:8px;background:rgba(0,168,162,.1);
-  display:flex;align-items:center;justify-content:center;font-size:1.1rem;
-  margin-bottom:.5rem;transition:background .4s;flex-shrink:0;
-}
-.sc-name{font-size:.72rem;font-weight:700;color:var(--fg);margin-bottom:.2rem}
+.p5-content{position:relative;z-index:2;height:100%;display:flex;flex-direction:column;padding:clamp(2.2rem,4.5vh,2.8rem) clamp(2.5rem,5vw,3.75rem)}
+.p5-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:1.3rem;opacity:0;transform:translateY(-12px);transition:opacity .6s .1s var(--ease),transform .6s .1s var(--ease)}
+.p5-title{font-size:var(--h2);font-weight:900;letter-spacing:-.03em;line-height:1}
+.p5-title span{color:var(--coral);text-shadow:0 0 40px var(--cglow)}
+.p5-count{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--fgm);text-align:right;line-height:1.7}
+.p5-bands{flex:1;display:flex;flex-direction:column;gap:clamp(.7rem,1.6vh,1rem);min-height:0}
+.p5-band{flex:1;display:flex;gap:clamp(1rem,2vw,1.4rem);align-items:stretch;border-radius:14px;padding:clamp(.85rem,2vh,1.1rem) clamp(1.2rem,2vw,1.5rem);opacity:0;transform:translateX(-20px);transition:opacity .6s var(--ease),transform .6s var(--ease)}
+.p5-band.b-teal{background:rgba(0,168,162,.05);border:1px solid rgba(0,168,162,.16)}
+.p5-band.b-purple{background:rgba(125,78,153,.06);border:1px solid rgba(125,78,153,.18)}
+.p5-band.b-yellow{background:rgba(247,192,31,.05);border:1px solid rgba(247,192,31,.20)}
+.p5-bcat{width:150px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border);padding-right:1.1rem}
+.p5-bcat .cat{font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;line-height:1.4}
+.b-teal .cat{color:var(--coral)}.b-purple .cat{color:#A36BC4}.b-yellow .cat{color:var(--yellow)}
+.p5-bcat .cnt{font-size:.7rem;font-weight:300;color:var(--fgm);margin-top:.35rem}
+.p5-cells{flex:1;display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(.8rem,1.5vw,1rem);align-items:center}
+.p5-cell .ico{width:22px;height:22px;margin-bottom:.55rem}
+.b-teal .p5-cell .ico{color:var(--coral)}.b-purple .p5-cell .ico{color:#A36BC4}.b-yellow .p5-cell .ico{color:var(--yellow)}
+.p5-cname{font-size:.78rem;font-weight:700;line-height:1.2;margin-bottom:.25rem}
+.p5-cdesc{font-size:.66rem;font-weight:300;line-height:1.4;color:var(--fgm)}
 #p5.on .p5-head{opacity:1;transform:none}
-#p5.on .sc-card{opacity:1;transform:translateY(0)}
-#p5.on .sc-card:nth-child(1){transition-delay:.10s}
-#p5.on .sc-card:nth-child(2){transition-delay:.14s}
-#p5.on .sc-card:nth-child(3){transition-delay:.18s}
-#p5.on .sc-card:nth-child(4){transition-delay:.22s}
-#p5.on .sc-card:nth-child(5){transition-delay:.26s}
-#p5.on .sc-card:nth-child(6){transition-delay:.30s}
-#p5.on .sc-card:nth-child(7){transition-delay:.34s}
-#p5.on .sc-card:nth-child(8){transition-delay:.38s}
-#p5.on .sc-card:nth-child(9){transition-delay:.42s}
-#p5.on .sc-card:nth-child(10){transition-delay:.46s}
-#p5.on .sc-card:nth-child(11){transition-delay:.50s}
-#p5.on .sc-card:nth-child(12){transition-delay:.54s}
-#p5.on .sc-card:nth-child(13){transition-delay:.58s}
-#p5.on .sc-card:nth-child(14){transition-delay:.62s}
-#p5.on .sc-card:nth-child(15){transition-delay:.66s}
+#p5.on .p5-band{opacity:1;transform:none}
+#p5.on .p5-band:nth-child(1){transition-delay:.16s}
+#p5.on .p5-band:nth-child(2){transition-delay:.26s}
+#p5.on .p5-band:nth-child(3){transition-delay:.36s}
 
 /* ────────────────────────────────────────
-   PAGE 6 — TECNOLOGÍA (DARK + CORAL CARD)
+   PAGE 6 — TECNOLOGÍA (split + financia de marca)
 ───────────────────────────────────────── */
-#p6{}
 #p6 .blob-1{width:350px;height:350px;top:50px;right:-80px;background:var(--cglow);opacity:.5}
-.p6-content{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:1fr 1fr;gap:0}
-.p6-left{
-  display:flex;flex-direction:column;justify-content:center;
-  padding:5.5rem 4rem 5.5rem 5rem;
-  border-right:1px solid var(--border);
-  opacity:0;transform:translateX(-20px);transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease);
-}
-.partners-cinema{display:flex;flex-wrap:wrap;gap:.7rem;margin-top:2rem}
-.pc-badge{
-  background:var(--glass);border:1px solid var(--border);
-  backdrop-filter:blur(12px);border-radius:8px;
-  padding:.6rem 1.4rem;font-size:1rem;font-weight:800;letter-spacing:.04em;
-  color:rgba(255,255,255,.6);transition:all .3s var(--ease);cursor:default;
-}
-.pc-badge:hover{background:rgba(0,168,162,.1);border-color:rgba(0,168,162,.35);color:var(--coral);box-shadow:0 0 15px var(--cglow)}
-.p6-right{
-  display:flex;flex-direction:column;justify-content:center;align-items:center;
-  padding:5.5rem 5rem 5.5rem 4rem;
-  opacity:0;transform:translateX(20px);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease);
-}
-.finance-cinema{
-  background:linear-gradient(135deg,var(--coral) 0%,#C04A1A 100%);
-  border-radius:16px;padding:3rem;width:100%;
-  box-shadow:0 20px 60px rgba(0,168,162,.35);
-}
-.finance-cinema h3{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:900;letter-spacing:-.02em;color:#fff;margin-bottom:1rem;line-height:1}
-/* pull quote inside finance */
-.finance-cinema .pq{
-  font-family:'Playfair Display',serif;font-style:italic;
-  font-size:.95rem;line-height:1.7;color:rgba(255,255,255,.8);margin-bottom:1.5rem;
-}
-.ska-chip{
-  display:inline-flex;align-items:center;gap:.4rem;
-  background:rgba(0,0,0,.2);color:rgba(255,255,255,.85);
-  padding:.4rem 1rem;border-radius:50px;font-size:.7rem;font-weight:700;
-  font-family:'JetBrains Mono',monospace;letter-spacing:.08em;
-}
+.p6-content{position:relative;z-index:2;height:100%;display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(2rem,3.6vw,2.9rem);padding:clamp(2.1rem,5vh,3.25rem) clamp(2.5rem,5vw,3.75rem)}
+.p6-left{display:flex;flex-direction:column;height:100%;opacity:0;transform:translateX(-20px);transition:opacity .8s .15s var(--ease),transform .8s .15s var(--ease)}
+.p6-left h2{font-size:clamp(2rem,3.6vw,2.65rem);font-weight:900;line-height:.92;letter-spacing:-.03em;margin:.9rem 0 .85rem}
+.p6-partners{flex:1;display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:.7rem;min-height:0}
+.p6-pcard{display:flex;flex-direction:column;justify-content:center;gap:.3rem;background:var(--glass);border:1px solid var(--border);border-radius:11px;padding:0 1rem;backdrop-filter:blur(12px)}
+.p6-pcard.span2{grid-column:1 / -1;padding:.9rem 1rem}
+.p6-pname{display:flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:800;letter-spacing:.03em}
+.p6-pdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
+.p6-pdesc{font-size:.7rem;font-weight:300;line-height:1.4;color:var(--fgm)}
+.p6-right{height:100%;display:flex;opacity:0;transform:translateX(20px);transition:opacity .8s .3s var(--ease),transform .8s .3s var(--ease)}
+.p6-finance{background:linear-gradient(140deg,#00A8A2 0%,#0e7e8c 42%,#7D4E99 100%);border-radius:18px;padding:clamp(1.7rem,3.5vh,2.6rem) clamp(1.8rem,2.6vw,2.4rem);width:100%;display:flex;flex-direction:column;justify-content:center;box-shadow:0 24px 60px rgba(0,168,162,.22)}
+.p6-finance .fmono{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:.9rem}
+.p6-finance h3{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;line-height:.95;letter-spacing:-.02em;color:#fff;margin-bottom:.75rem}
+.p6-fquote{font-family:'Playfair Display',serif;font-style:italic;font-size:1rem;line-height:1.55;color:rgba(255,255,255,.85);margin-bottom:1.2rem;border-left:2px solid rgba(255,255,255,.4);padding-left:1rem}
+.p6-perks{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.3rem}
+.p6-perk{display:flex;align-items:center;gap:.7rem;font-size:.88rem;font-weight:500;color:#fff}
+.p6-perk .ico{width:18px;height:18px;color:#fff}
+.p6-ska{display:inline-flex;align-items:center;gap:.5rem;background:rgba(0,0,0,.24);color:#fff;padding:.55rem 1.05rem;border-radius:50px;font-family:'JetBrains Mono',monospace;font-size:.72rem;font-weight:700;letter-spacing:.08em;width:fit-content}
+.p6-ska .ico{width:15px;height:15px}
 #p6.on .p6-left,#p6.on .p6-right{opacity:1;transform:none}
 
 /* ────────────────────────────────────────
@@ -665,88 +610,107 @@ a{color:inherit;text-decoration:none}
   </div>
 
   <!-- PAGE 4 — PROPUESTA DE VALOR -->
-  <div class="p" id="p4">
+  <div class="p" id="p4" data-screen-label="04 Propuesta de valor">
     <div class="blob blob-1"></div>
     <div class="p4-content">
-      <div class="p4-top">
-        <h2 class="p4-display">LA FÓRMULA<br><span>GYSFLY</span></h2>
-        <p class="p4-note">Nosotros ponemos la logística para que tú solo disfrutes cada viaje.</p>
+      <div class="p4-left">
+        <span class="mono-tag">// 04 · Propuesta de valor</span>
+        <h2 class="p4-h2">LA FÓRMULA<span>GYSFLY</span></h2>
+        <p class="p4-note">Nosotros ponemos toda la logística para que tú solo te dediques a disfrutar cada viaje.</p>
+        <div class="p4-formula">
+          <div class="fl-lbl">Nosotros</div>
+          <div class="fl-val">LOGÍSTICA</div>
+          <div class="fl-op">+</div>
+          <div class="fl-lbl">Tú</div>
+          <div class="fl-val">DISFRUTAR</div>
+          <div class="fl-op">=</div>
+          <div class="fl-result"><span class="ico"><i data-lucide="plane"></i></span><span class="fl-val">EXPERIENCIA PERFECTA</span></div>
+        </div>
       </div>
-      <div class="formula-glass">
-        <div class="fg-block"><div class="fg-label">Nosotros</div><div class="fg-val">LOGÍSTICA</div></div>
-        <div class="fg-op">+</div>
-        <div class="fg-block"><div class="fg-label">Tú</div><div class="fg-val">DISFRUTAR</div></div>
-        <div class="fg-op">=</div>
-        <div class="fg-result fg-block"><div class="fg-label" style="color:rgba(255,255,255,.6)">Resultado</div><div class="fg-val">✈ EXPERIENCIA PERFECTA</div></div>
-      </div>
-      <div class="val-cinema">
-        <div class="vc2" style="--i:0"><span class="vc2-icon">🌍</span><h4>Cobertura total</h4><p>Todas las aerolíneas nacionales e internacionales, hotelería mundial, cruceros, más de 200 tours planificados, eurotrips y paquetes nacionales de todo tipo.</p></div>
-        <div class="vc2" style="--i:1"><span class="vc2-icon">🎭</span><h4>Experiencias completas</h4><p>Entradas a eventos, conciertos y parques. Renta de vehículo, VIP lunch, protocolo personalizado en aeropuerto y traslados incluidos.</p></div>
-        <div class="vc2" style="--i:2"><span class="vc2-icon">📋</span><h4>Trámites y logística</h4><p>Gestión de visas, E-SIM a nivel mundial y financiamiento disponible. Todo coordinado desde un solo punto de contacto.</p></div>
-        <div class="vc2" style="--i:3"><span class="vc2-icon">🕐</span><h4>Asesoría 24/7</h4><p>Acompañamiento personalizado antes, durante y después del viaje. Asistencia directa en cualquier destino del mundo.</p></div>
+      <div class="p4-right">
+        <div class="p4-row t-teal"><div class="p4-ricon"><span class="ico"><i data-lucide="globe"></i></span></div><div><div class="p4-rtitle">Cobertura total</div><div class="p4-rdesc">Todas las aerolíneas nacionales e internacionales, hotelería mundial, cruceros y más de 200 tours planificados.</div></div></div>
+        <div class="p4-row t-purple"><div class="p4-ricon"><span class="ico"><i data-lucide="sparkles"></i></span></div><div><div class="p4-rtitle">Experiencias completas</div><div class="p4-rdesc">Eventos, conciertos y parques. Renta de vehículo, VIP lunch, protocolo personalizado y traslados incluidos.</div></div></div>
+        <div class="p4-row t-yellow"><div class="p4-ricon"><span class="ico"><i data-lucide="clipboard-check"></i></span></div><div><div class="p4-rtitle">Trámites y logística</div><div class="p4-rdesc">Gestión de visas, E-SIM a nivel mundial y financiamiento disponible. Todo desde un solo punto de contacto.</div></div></div>
+        <div class="p4-row t-teal"><div class="p4-ricon"><span class="ico"><i data-lucide="headset"></i></span></div><div><div class="p4-rtitle">Asesoría 24/7</div><div class="p4-rdesc">Acompañamiento personalizado antes, durante y después del viaje. Asistencia directa en cualquier destino.</div></div></div>
       </div>
     </div>
     <div class="pnum"><strong>04</strong><span class="pnum-sep"></span><span>08</span></div>
   </div>
 
   <!-- PAGE 5 — SERVICIOS -->
-  <div class="p" id="p5">
+  <div class="p" id="p5" data-screen-label="05 Servicios">
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="p5-content">
       <div class="p5-head">
-        <h2 class="p5-title">SOLUCIONES<br><span>INTEGRALES</span></h2>
-        <p class="p5-count">15 servicios disponibles<br>Clase mundial · Todo incluido</p>
+        <h2 class="p5-title">SOLUCIONES <span>INTEGRALES</span></h2>
+        <p class="p5-count">15 servicios disponibles<br>Todo incluido · Clase mundial</p>
       </div>
-      <div class="srv-cinema">
-        <div class="sc-card"><div class="sc-icon">✈️</div><p class="sc-name">Boletería Aérea</p><span class="sc-desc">Nacionales e internacionales a las mejores tarifas disponibles</span></div>
-        <div class="sc-card"><div class="sc-icon">🏨</div><p class="sc-name">Hospedaje</p><span class="sc-desc">Hoteles y apartamentos desde económico hasta lujo 5★</span></div>
-        <div class="sc-card"><div class="sc-icon">🚘</div><p class="sc-name">Traslados</p><span class="sc-desc">Transfer privado aeropuerto-hotel en cualquier destino</span></div>
-        <div class="sc-card"><div class="sc-icon">🛡️</div><p class="sc-name">Seguros</p><span class="sc-desc">Cobertura médica y de viaje para tu tranquilidad total</span></div>
-        <div class="sc-card"><div class="sc-icon">📄</div><p class="sc-name">Visados</p><span class="sc-desc">Asesoría y gestión completa de trámites consulares</span></div>
-        <div class="sc-card"><div class="sc-icon">🎵</div><p class="sc-name">Eventos</p><span class="sc-desc">Conciertos, festivales y experiencias exclusivas globales</span></div>
-        <div class="sc-card"><div class="sc-icon">🗺️</div><p class="sc-name">Tours Europa</p><span class="sc-desc">Circuitos premium por las principales capitales europeas</span></div>
-        <div class="sc-card"><div class="sc-icon">🚢</div><p class="sc-name">Cruceros</p><span class="sc-desc">MSC, Royal Caribbean y las mejores líneas del mercado</span></div>
-        <div class="sc-card"><div class="sc-icon">📖</div><p class="sc-name">Guías</p><span class="sc-desc">Guías certificados en destinos turísticos seleccionados</span></div>
-        <div class="sc-card"><div class="sc-icon">📶</div><p class="sc-name">eSIMs</p><span class="sc-desc">Conectividad internacional directa desde tu smartphone</span></div>
-        <div class="sc-card"><div class="sc-icon">💰</div><p class="sc-name">Mejores precios</p><span class="sc-desc">Las tarifas más competitivas del mercado, garantizado</span></div>
-        <div class="sc-card"><div class="sc-icon">🤝</div><p class="sc-name">Presupuesto flexible</p><span class="sc-desc">Nos adaptamos a cualquier presupuesto sin comprometer calidad</span></div>
-        <div class="sc-card"><div class="sc-icon">🔐</div><p class="sc-name">Seguros de viaje</p><span class="sc-desc">Cobertura completa médica, de cancelación y equipaje</span></div>
-        <div class="sc-card"><div class="sc-icon">💳</div><p class="sc-name">+15 métodos de pago</p><span class="sc-desc">Tarjeta, transferencia, cripto, divisas y más opciones</span></div>
-        <div class="sc-card"><div class="sc-icon">🏢</div><p class="sc-name">Paquetes corporativos</p><span class="sc-desc">Soluciones a medida para empresas, grupos y eventos</span></div>
+      <div class="p5-bands">
+        <div class="p5-band b-teal">
+          <div class="p5-bcat"><span class="cat">Transporte<br>&amp; Estadía</span><span class="cnt">5 servicios</span></div>
+          <div class="p5-cells">
+            <div class="p5-cell"><span class="ico"><i data-lucide="plane"></i></span><div class="p5-cname">Boletería Aérea</div><div class="p5-cdesc">Nac. e internacional</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="building-2"></i></span><div class="p5-cname">Hospedaje</div><div class="p5-cdesc">De económico a lujo 5★</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="car-front"></i></span><div class="p5-cname">Traslados</div><div class="p5-cdesc">Transfer privado</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="ship"></i></span><div class="p5-cname">Cruceros</div><div class="p5-cdesc">MSC, Royal Caribbean</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="map"></i></span><div class="p5-cname">Tours Europa</div><div class="p5-cdesc">Capitales europeas</div></div>
+          </div>
+        </div>
+        <div class="p5-band b-purple">
+          <div class="p5-bcat"><span class="cat">Experiencias<br>&amp; Trámites</span><span class="cnt">5 servicios</span></div>
+          <div class="p5-cells">
+            <div class="p5-cell"><span class="ico"><i data-lucide="ticket"></i></span><div class="p5-cname">Eventos</div><div class="p5-cdesc">Conciertos y festivales</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="compass"></i></span><div class="p5-cname">Guías</div><div class="p5-cdesc">Certificados por destino</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="file-check"></i></span><div class="p5-cname">Visados</div><div class="p5-cdesc">Trámites consulares</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="shield-check"></i></span><div class="p5-cname">Seguros</div><div class="p5-cdesc">Médica y de viaje</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="wifi"></i></span><div class="p5-cname">eSIMs</div><div class="p5-cdesc">Conectividad global</div></div>
+          </div>
+        </div>
+        <div class="p5-band b-yellow">
+          <div class="p5-bcat"><span class="cat">Precios<br>&amp; Pagos</span><span class="cnt">5 servicios</span></div>
+          <div class="p5-cells">
+            <div class="p5-cell"><span class="ico"><i data-lucide="tag"></i></span><div class="p5-cname">Mejores precios</div><div class="p5-cdesc">Garantizado</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="sliders-horizontal"></i></span><div class="p5-cname">Presupuesto flexible</div><div class="p5-cdesc">Nos adaptamos</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="umbrella"></i></span><div class="p5-cname">Seguros de viaje</div><div class="p5-cdesc">Cancelación y equipaje</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="credit-card"></i></span><div class="p5-cname">+15 métodos de pago</div><div class="p5-cdesc">Cripto, divisas y más</div></div>
+            <div class="p5-cell"><span class="ico"><i data-lucide="briefcase"></i></span><div class="p5-cname">Paquetes corporativos</div><div class="p5-cdesc">Empresas y grupos</div></div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="pnum"><strong>05</strong><span class="pnum-sep"></span><span>08</span></div>
   </div>
 
   <!-- PAGE 6 — TECNOLOGÍA -->
-  <div class="p" id="p6">
+  <div class="p" id="p6" data-screen-label="06 Tecnología">
     <div class="blob blob-1"></div>
     <div class="p6-content">
       <div class="p6-left">
         <span class="mono-tag">// 06 · Infraestructura</span>
-        <h2 class="inter-h2" style="font-size:clamp(1.8rem,3.5vw,3rem)">TECNOLOGÍA<br>A TU ALCANCE</h2>
-        <p class="body-inter" style="margin-top:.8rem">Operamos con plataformas de clase mundial que garantizan disponibilidad, precisión y tarifas competitivas en tiempo real.</p>
-        <div class="partners-cinema">
-          <div class="pc-partner"><span class="pc-pname">KIU</span><span class="pc-pdesc">Sistema de reservas para aerolíneas regionales</span></div>
-          <div class="pc-partner"><span class="pc-pname">SABRE</span><span class="pc-pdesc">GDS líder mundial en distribución de viajes</span></div>
-          <div class="pc-partner"><span class="pc-pname">AMADEUS</span><span class="pc-pdesc">Plataforma global · +500 aerolíneas conectadas</span></div>
-          <div class="pc-partner"><span class="pc-pname">B2B</span><span class="pc-pdesc">Portal mayorista para agentes certificados</span></div>
-          <div class="pc-partner"><span class="pc-pname">TKCONNECT</span><span class="pc-pdesc">Ticketing integrado y gestión de grupos</span></div>
-          <div class="pc-partner"><span class="pc-pname">COPACONNECT</span><span class="pc-pdesc">Conectividad directa con Copa Airlines y alianzas</span></div>
-          <div class="pc-partner"><span class="pc-pname">SERVIVUELO</span><span class="pc-pdesc">Servicios especializados de aviación regional</span></div>
+        <h2>TECNOLOGÍA<br>A TU ALCANCE</h2>
+        <p class="body-inter">Operamos con plataformas de clase mundial que garantizan disponibilidad, precisión y tarifas competitivas en tiempo real.</p>
+        <div class="p6-partners">
+          <div class="p6-pcard"><div class="p6-pname"><span class="p6-pdot" style="background:var(--coral)"></span>KIU</div><div class="p6-pdesc">Reservas para aerolíneas regionales</div></div>
+          <div class="p6-pcard"><div class="p6-pname"><span class="p6-pdot" style="background:var(--coral)"></span>SABRE</div><div class="p6-pdesc">GDS líder mundial en distribución</div></div>
+          <div class="p6-pcard"><div class="p6-pname"><span class="p6-pdot" style="background:#A36BC4"></span>AMADEUS</div><div class="p6-pdesc">+500 aerolíneas conectadas</div></div>
+          <div class="p6-pcard"><div class="p6-pname"><span class="p6-pdot" style="background:#A36BC4"></span>B2B</div><div class="p6-pdesc">Portal mayorista para agentes</div></div>
+          <div class="p6-pcard"><div class="p6-pname"><span class="p6-pdot" style="background:var(--yellow)"></span>TKCONNECT</div><div class="p6-pdesc">Ticketing y gestión de grupos</div></div>
+          <div class="p6-pcard"><div class="p6-pname"><span class="p6-pdot" style="background:var(--yellow)"></span>COPACONNECT</div><div class="p6-pdesc">Directo con Copa Airlines</div></div>
+          <div class="p6-pcard span2"><div class="p6-pname"><span class="p6-pdot" style="background:var(--coral)"></span>SERVIVUELO</div><div class="p6-pdesc">Servicios especializados de aviación regional</div></div>
         </div>
       </div>
       <div class="p6-right">
-        <div class="finance-cinema">
+        <div class="p6-finance">
+          <span class="fmono">// Financiamiento</span>
           <h3>FINANCIA<br>TU VIAJE</h3>
-          <p class="pq">«Opciones de pago flexibles que te permiten planificar estratégicamente y viajar según tus posibilidades.»</p>
-          <div class="finance-perks">
-            <div class="fp-item"><span class="fp-check">✓</span> Viaja con cuotas sin interés</div>
-            <div class="fp-item"><span class="fp-check">✓</span> Reserva con depósito mínimo inicial</div>
-            <div class="fp-item"><span class="fp-check">✓</span> Múltiples divisas aceptadas</div>
+          <p class="p6-fquote">«Opciones de pago flexibles que te permiten planificar estratégicamente y viajar según tus posibilidades.»</p>
+          <div class="p6-perks">
+            <div class="p6-perk"><span class="ico"><i data-lucide="check"></i></span>Viaja con cuotas sin interés</div>
+            <div class="p6-perk"><span class="ico"><i data-lucide="check"></i></span>Reserva con depósito mínimo inicial</div>
+            <div class="p6-perk"><span class="ico"><i data-lucide="check"></i></span>Múltiples divisas aceptadas</div>
           </div>
-          <span class="ska-chip">✓ SKALAPAY</span>
+          <span class="p6-ska"><span class="ico"><i data-lucide="badge-check"></i></span>SKALAPAY</span>
         </div>
       </div>
     </div>
@@ -828,7 +792,7 @@ a{color:inherit;text-decoration:none}
         <div class="info-glass">
           <div class="ig-row"><div class="ig-icon">📍</div><div><p class="ig-lbl">Sede principal</p><p class="ig-val">C.C Reda Building, Calle 4 Avenidas<br>Valencia 2001, Carabobo</p></div></div>
           <div class="ig-row"><div class="ig-icon">📱</div><div><p class="ig-lbl">Teléfono / WhatsApp</p><p class="ig-val">+58 412-3588033<br>+58 412-3394948</p></div></div>
-          <div class="ig-row"><div class="ig-icon">✉️</div><div><p class="ig-lbl">Correo</p><p class="ig-val">Gysflygerencia@gmail.com</p></div></div>
+          <div class="ig-row"><div class="ig-icon">✉️</div><div><p class="ig-lbl">Correo</p><p class="ig-val"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="1c5b656f7a70657b796e79727f757d5c7b717d7570327f7371">[email&#160;protected]</a></p></div></div>
         </div>
         <div class="p8-socials">
           <a href="https://www.instagram.com/gysfly.ve/" target="_blank" class="p8-soc">📸 @gysfly.ve</a>
@@ -846,7 +810,7 @@ a{color:inherit;text-decoration:none}
 
 </div><!-- /wrap -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 const wrap  = document.getElementById('wrap');
 const pages = document.querySelectorAll('.p');
 const bars  = document.querySelectorAll('.bar');
@@ -875,5 +839,7 @@ document.addEventListener('keydown', e => {
 
 pages[0].classList.add('on');
 </script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script>window.addEventListener('load',function(){if(window.lucide)lucide.createIcons();});</script>
 </body>
 </html>
